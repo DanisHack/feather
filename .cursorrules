@@ -1,0 +1,30 @@
+You are building Feather, a premium Mac stock research app.
+
+ALWAYS:
+- Use TypeScript strictly — no 'any' types ever
+- Use Tailwind utility classes only — no inline styles, no CSS files
+- Use Framer Motion for all animations
+- Use components from /src/design-system/ before creating new ones
+- Handle loading, error, and empty states on every data-fetching component
+- Use Zustand stores for all shared state
+- Use custom hooks in /src/hooks/ for all API calls
+- Format prices with formatters from /src/lib/formatters.ts
+- Use mock data from /src/mocks/ when APIs aren't wired yet
+
+NEVER:
+- Use localStorage or sessionStorage
+- Hardcode colors — use design tokens from tailwind.config.js
+- Call Polygon.io or Claude API directly from components
+- Use class components
+- Use 'any' TypeScript type
+- Create new CSS files
+- Use inline styles except for truly dynamic values
+
+DESIGN:
+- Background is always #0B0B0F
+- Cards use bg-bg-elevated-4, border-border tokens
+- Positive numbers: text-status-positive (#4EBE96)
+- Negative numbers: text-status-negative (#D84F68)
+- Loading states: always use <Skeleton /> component, never spinners
+- Animations: subtle, 200-300ms, ease-out. Never flashy.
+- Font: Calibre via design tokens
