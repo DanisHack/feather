@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Connect Broker — Feather</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0B0B0F;
+      color: #F5F5F5;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .loading {
+      text-align: center;
+      font-size: 14px;
+      color: #868F97;
+    }
+    .error {
+      text-align: center;
+      font-size: 14px;
+      color: #D84F68;
+    }
+  </style>
+</head>
+<body>
+  <div id="status" class="loading">Connecting to broker...</div>
+
+  <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+  <script>
+    // Link token is passed via the URL hash
+    const linkToken = window.location.hash.slice(1);
+
+    if (!linkToken) {
+      document.getElementById('status').className = 'error';
+      document.getElementById('status').textContent = 'Missing link token';
+    } else {
+      const handler = Plaid.create({
+        token: linkToken,
+        onSuccess: function (publicToken, metadata) {
+          // Send public_token back to main process via postMessage
+          window.opener?.postMessage(
+            { type: 'plaid-success', publicToken, metadata },
+            '*'
+          );
+          window.close();
+        },
+        onExit: function (err) {
+          window.opener?.postMessage(
+            { type: 'plaid-exit', error: err },
+            '*'
+          );
+          window.close();
+        },
+        onEvent: function (eventName) {
+          // Optional: log events for debugging
+          console.log('[Plaid Event]', eventName);
+        },
+      });
+
+      handler.open();
+    }
+  </script>
+</body>
+</html>
