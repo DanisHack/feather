@@ -101,7 +101,7 @@ feather/
 │   ├── lib/               # API clients (polygon, stripe, claude, plaid)
 │   ├── types/             # TypeScript interfaces
 │   └── mocks/             # Mock data for every screen
-├── design-reference/      # Fey.com visual reference frames
+├── design-reference/      # Visual reference frames
 └── screenshots/           # App screenshots
 ```
 
